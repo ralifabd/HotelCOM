@@ -1,0 +1,155 @@
+// HotelServer.idl : IDL source for HotelServer
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (HotelServer.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    object,
+    uuid(5aa88d9e-fae9-407e-a7fa-7a3396394736),
+    dual,
+    nonextensible,
+    pointer_default(unique)
+]
+interface IHotelService : IDispatch
+{
+    [id(1)]
+    HRESULT CheckRoom(
+        [in] LONG roomId,
+        [out, retval] VARIANT_BOOL* available
+    );
+
+    [id(2)]
+        HRESULT BookRoom(
+            [in] LONG roomId,
+            [in] BSTR guestName,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(3)]
+        HRESULT CancelBooking(
+            [in] LONG roomId,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(4)]
+        HRESULT GetRoomInfo(
+            [in] LONG roomId,
+            [out, retval] BSTR* roomJson
+        );
+
+    [id(5)]
+        HRESULT GetRoomsByType(
+            [in] BSTR roomType,
+            [out, retval] BSTR* roomsJson
+        );
+
+    [id(6)]
+        HRESULT SetRoomStatus(
+            [in] LONG roomId,
+            [in] BSTR status,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(7)]
+        HRESULT CreateBooking(
+            [in] LONG roomId,
+            [in] BSTR guestName,
+            [in] BSTR checkIn,
+            [in] BSTR checkOut,
+            [out, retval] LONG* bookingId
+        );
+
+    [id(8)]
+        HRESULT GetBookingInfo(
+            [in] LONG bookingId,
+            [out, retval] BSTR* bookingJson
+        );
+
+    [id(9)]
+        HRESULT UpdateBooking(
+            [in] LONG bookingId,
+            [in] BSTR newCheckIn,
+            [in] BSTR newCheckOut,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(10)]
+        HRESULT FindAvailableRooms(
+            [in] BSTR checkIn,
+            [in] BSTR checkOut,
+            [in] BSTR roomType,
+            [out, retval] BSTR* roomsJson
+        );
+
+    [id(11)]
+        HRESULT CalculateBookingPrice(
+            [in] LONG bookingId,
+            [out, retval] DOUBLE* totalPrice
+        );
+
+    [id(12)]
+        HRESULT ApplyDiscount(
+            [in] LONG bookingId,
+            [in] DOUBLE discount,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(13)]
+        HRESULT AddRoom(
+            [in] BSTR roomJson,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(14)]
+        HRESULT UpdateRoom(
+            [in] LONG roomId,
+            [in] BSTR roomJson,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(15)]
+        HRESULT RemoveRoom(
+            [in] LONG roomId,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(16)]
+        HRESULT CheckIn(
+            [in] LONG bookingId,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(17)]
+        HRESULT CheckOut(
+            [in] LONG bookingId,
+            [out, retval] VARIANT_BOOL* success
+        );
+
+    [id(18)]
+        HRESULT GetHotelStatistics(
+            [out, retval] BSTR* statisticsJson
+        );
+};
+
+
+import "shobjidl.idl";
+
+[
+	uuid(f26aa6f4-9f00-4295-85fa-99ee768434bb),
+	version(1.0),
+]
+library HotelServerLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(4f72097e-cf14-45d3-9232-ca002e541fff)
+	]
+	coclass HotelService
+	{
+		[default] interface IHotelService;
+	};
+};

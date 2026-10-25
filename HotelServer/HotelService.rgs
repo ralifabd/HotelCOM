@@ -1,0 +1,16 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {4f72097e-cf14-45d3-9232-ca002e541fff} = s 'HotelService class'
+		{
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{f26aa6f4-9f00-4295-85fa-99ee768434bb}'
+			Version = s '1.0'
+		}
+	}
+}
